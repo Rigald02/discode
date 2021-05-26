@@ -43,10 +43,13 @@ public class App {
         Spark.post("/friends/add", (req, res) -> friendController.addFriend(req, res));
         Spark.get("/friends/", (req, res) -> friendController.list(req, res));
 
-        // Login
+        // Log in and out
         Spark.get(Conf.ROUTE_LOGIN, (req, res) -> authController.login(req, res));
         Spark.post(Conf.ROUTE_LOGIN, (req, res) -> authController.login(req, res));
+        Spark.get("logout", (req, res) -> authController.logout(req, res));
 
+        //Sign
+        Spark.get(Conf.ROUTE_SIGNUP, (req, res) -> authController.signUp(req,res));
 
         // Default
         Spark.get("/", (req, res) -> {

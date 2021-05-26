@@ -1,6 +1,7 @@
 package org.example.features.user;
 
 import org.example.core.Conf;
+import org.example.core.Database;
 import org.example.core.Template;
 import org.example.models.User;
 import org.example.utils.SessionUtils;
@@ -11,7 +12,14 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AuthController {
@@ -45,5 +53,43 @@ public class AuthController {
         // Redirect to medias page
         response.redirect(Conf.ROUTE_AUTHENTICATED_ROOT);
         return null;
+    }
+
+    public String signUp(Request request, Response response) {
+        if (request.requestMethod().equals("GET")) {
+            Map<String, Object> model = new HashMap<>();
+            return Template.render("auth_login.html", model);
+        }
+
+        List<User> users = new ArrayList<>();
+
+        Connection connection = Database.get().getConnection();
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM media ORDER BY release_date DESC");
+            while (rs.next()) {
+                users.add(UserDao.mapToUser((rs)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // mapping pour email, passowrd et confirm
+
+        //faire la connection par connection et preparedstatement pour l'ordre sql
+
+        return null;
+    }
+
+    public String logout(Request request, Response response) {
+        Session session = request.session(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        response.removeCookie("session");
+        response.removeCookie("JSESSIONID");
+        response.redirect("/");
+
+        return "";
     }
 }
