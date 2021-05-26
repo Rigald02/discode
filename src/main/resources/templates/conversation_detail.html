@@ -8,6 +8,12 @@
 
         <div class="col-sm-6 col-md-9 mt-2">
             <div class="row m-auto">
+                <div class="col-sm-4 offset-sm-4">
+                    <form action="/friends/" method="get">
+                        <input type="search" id="search" name="title"
+                               placeholder="search...">
+                        <button type="submit" class="btn btn-block bg-red">Valider</button>
+                </div>
                 <h3>$interlocutor.getUsername()</h3>
                 #foreach($message in $messages)
 

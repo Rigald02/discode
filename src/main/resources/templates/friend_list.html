@@ -9,6 +9,12 @@
             <div class="row">
                 <div class="col-10">
                     <h2><i class="bi-people-fill mx-2"></i>Friends</h2>
+                    <div class="col-sm-4 offset-sm-4">
+                        <form action="/friends/" method="get">
+                        <input type="search" id="search" name="title"
+                               placeholder="search...">
+                        <button type="submit" class="btn btn-block bg-red">Valider</button>
+                    </div>
                 </div>
                 <div class="col-2 align-self-center d-flex justify-content-end">
                     <a href="/friends/add" class="btn btn-success">Add a Friend</a>
@@ -38,4 +44,3 @@
     </div>
 </div>
 #end
-

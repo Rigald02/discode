@@ -52,11 +52,15 @@ public class FriendController {
         // FIXME What happens if the user does not exist?
         User newFriend = userDao.findUserWithUsername(username);
         logger.info("User = " + newFriend);
-        if (friendDao.isAlreadyFriend(userId, newFriend.getId())) {
-            model.put("message", "Déjà ami avec " + newFriend.getUsername() + " !");
-        } else {
-            friendDao.addFriend(userId, newFriend.getId());
-            model.put("message", "Ami " + newFriend.getUsername() + " ajouté !");
+        if (userDao.findUserWithUsername(username) != null){
+            if (friendDao.isAlreadyFriend(userId, newFriend.getId())) {
+                model.put("message", "Déjà ami avec " + newFriend.getUsername() + " !");
+            } else {
+                friendDao.addFriend(userId, newFriend.getId());
+                model.put("message", "Ami " + newFriend.getUsername() + " ajouté !");
+            }
+        }else {
+            model.put("message", "Désolé, " + userDao.findUserWithUsername(username) + " n'existe pas.");
         }
 
         return Template.render("friend_add.html", model);

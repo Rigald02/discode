@@ -18,6 +18,7 @@ public class FriendDao {
 
             st.setInt(1, userId);
 
+
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 User user = UserDao.mapToUser(rs);
