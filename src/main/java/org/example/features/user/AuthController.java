@@ -58,7 +58,7 @@ public class AuthController {
     public String signUp(Request request, Response response) {
         if (request.requestMethod().equals("GET")) {
             Map<String, Object> model = new HashMap<>();
-            return Template.render("auth_login.html", model);
+            return Template.render("auth_signup.html", model);
         }
 
         List<User> users = new ArrayList<>();
@@ -66,7 +66,8 @@ public class AuthController {
         Connection connection = Database.get().getConnection();
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM media ORDER BY release_date DESC");
+            ResultSet rs = st.executeQuery("INSERT INTO discoding.users (email, username, password)" +
+                    "VALUES('', '', '', NULL);");
             while (rs.next()) {
                 users.add(UserDao.mapToUser((rs)));
             }

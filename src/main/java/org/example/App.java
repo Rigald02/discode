@@ -49,7 +49,7 @@ public class App {
         Spark.get("logout", (req, res) -> authController.logout(req, res));
 
         //Sign
-        Spark.get(Conf.ROUTE_SIGNUP, (req, res) -> authController.signUp(req,res));
+        Spark.get("/signup", (req, res) -> authController.signUp(req,res));
 
         // Default
         Spark.get("/", (req, res) -> {

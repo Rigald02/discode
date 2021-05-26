@@ -25,7 +25,6 @@ public class Conf {
     // Routes
     public static final String ROUTE_LOGIN = "/login";
     public static final String ROUTE_AUTHENTICATED_ROOT = "/friends/";
-    public static final String ROUTE_SIGNUP = "/signup";
 
     /**
      * Helper to retrieve an environment variable and use a default value if not found.
