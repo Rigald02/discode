@@ -2,7 +2,6 @@ package org.example.features.friends;
 
 import org.example.core.Template;
 import org.example.features.conversation.ConversationDao;
-import org.example.features.user.AuthController;
 import org.example.features.user.UserDao;
 import org.example.models.User;
 import org.example.utils.SessionUtils;
@@ -11,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
-import spark.Session;
-import spark.Spark;
 
 import java.util.HashMap;
 import java.util.Map;
