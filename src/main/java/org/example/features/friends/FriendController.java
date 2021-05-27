@@ -54,7 +54,7 @@ public class FriendController {
         logger.info("User = " + newFriend);
         if (userDao.findUserWithUsername(username) != null){
             if (friendDao.isAlreadyFriend(userId, newFriend.getId())) {
-                model.put("message", "Déjà ami avec " + newFriend.getUsername() + " !");
+                model.put("message", "Déja ami avec " + newFriend.getUsername() + " !");
             } else {
                 friendDao.addFriend(userId, newFriend.getId());
                 model.put("message", "Ami " + newFriend.getUsername() + " ajouté !");

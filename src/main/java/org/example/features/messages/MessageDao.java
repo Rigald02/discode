@@ -4,6 +4,7 @@ import org.example.core.Database;
 import org.example.models.Message;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class MessageDao {
                 Message message = MessageDao.mapMessage(rs);
                 messages.add(message);
             }
-        } catch (SQLException e) {
+        } catch (SQLException/* | ParseException*/ e) {
             e.printStackTrace();
         }
         return messages;

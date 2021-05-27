@@ -50,6 +50,7 @@ public class App {
 
         //Sign
         Spark.get("/signup", (req, res) -> authController.signUp(req,res));
+        Spark.post("/signup", (req, res) -> authController.signUp(req,res));
 
         // Default
         Spark.get("/", (req, res) -> {

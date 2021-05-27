@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Session;
+import spark.Spark;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -60,37 +61,39 @@ public class AuthController {
             Map<String, Object> model = new HashMap<>();
             return Template.render("auth_signup.html", model);
         }
+        System.out.println("salut");
 
-        List<User> users = new ArrayList<>();
+        Map<String, String> query = URLUtils.decodeQuery(request.body());
+        String email = query.get("email");
+        String password = query.get("password");
+        System.out.println("les");
 
         Connection connection = Database.get().getConnection();
+        System.out.println("zozo");
+
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("INSERT INTO discoding.users (email, username, password)" +
-                    "VALUES('', '', '', NULL);");
-            while (rs.next()) {
-                users.add(UserDao.mapToUser((rs)));
-            }
+            ResultSet rs = st.executeQuery("INSERT INTO discoding.users (email, password)" +
+                    "VALUES('" + email + "', '" + password + "');");
+            System.out.println(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        // mapping pour email, passowrd et confirm
-
+        // mapping for email, passowrd and confirm
         //faire la connection par connection et preparedstatement pour l'ordre sql
-
+        //redirect to the login page afterward
+        response.redirect(Conf.ROUTE_LOGIN);
         return null;
     }
 
     public String logout(Request request, Response response) {
         Session session = request.session(false);
-        if (session != null) {
-            session.invalidate();
+        if (session == null) {
+            Spark.halt(401, "No valid session found");
+            return "KO";
         }
-        response.removeCookie("session");
-        response.removeCookie("JSESSIONID");
-        response.redirect("/");
-
-        return "";
+        session.invalidate();
+        response.removeCookie("user_id");
+        return null;
     }
 }
