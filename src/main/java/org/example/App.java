@@ -5,7 +5,10 @@ import org.example.core.Database;
 import org.example.core.Template;
 import org.example.features.conversation.ConversationController;
 import org.example.features.friends.FriendController;
+import org.example.features.server.ServerController;
 import org.example.features.user.AuthController;
+import org.example.features.server.ServerController;
+import org.example.features.channel.ChannelController;
 import org.example.middlewares.AuthMiddleware;
 import org.example.middlewares.LoggerMiddleware;
 import org.example.utils.SessionUtils;
@@ -30,8 +33,13 @@ public class App {
         final AuthController authController = new AuthController();
         final ConversationController conversationController = new ConversationController();
         final FriendController friendController = new FriendController();
+        final ServerController serverController = new ServerController();
+        final ChannelController channelController = new ChannelController();
 
         logger.info("Welcome to Discoding Backend!");
+
+        //servers
+        Spark.get("/servers/", (req, res) -> serverController.serverList(req, res));
 
         // Conversations
         Spark.get("/conversations/start_with_user", (req, res) -> conversationController.getOrCreateConversationWithUser(req, res));
