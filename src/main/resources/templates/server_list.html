@@ -20,21 +20,33 @@
                 </div>
             </div>
             <ul class="list-group list-group-flush mt-2">
-                #foreach($friend in $friends)
+                #foreach($server in $servers)
                 <li class="d-flex justify-content-between list-group-item">
                     <div>
-                        #if ($friend.getAvatarUrl())
-                        #set($avatarUrl = $friend.getAvatarUrl())
+                        #if ($server.getAvatarUrl())
+                        #set($avatarUrl = $server.getAvatarUrl())
                         #else
                         #set($avatarUrl = "/lib/bootstrap-icons-1.5.0/person-fill.svg")
                         #end
                         <img src="$avatarUrl" class="rounded-circle avatar-small mx-2"/>
-                        $friend.getUsername()
+                        $server.getServername()
                     </div>
-
+                    <!--
+                    $channels = $server.getChannels()
+                    #foreach($channel in $channels)
+                <li class="d-flex justify-content-between list-group-item">
+                    <div>
+                        $channel.getChannelname()
+                    </div>
+                    <div class="align-self-center">
+                        <a href="/server/channel?channel_id=$channel.getId()">Message</a>
+                    </div>
+                </li>
+                #end
                     <div class="align-self-center">
                         <a href="/conversations/start_with_user?interlocutor_id=$friend.getId()">Message</a>
                     </div>
+                    -->
                 </li>
                 #end
             </ul>

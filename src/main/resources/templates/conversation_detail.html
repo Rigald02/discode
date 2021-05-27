@@ -9,8 +9,7 @@
         <div class="col-sm-6 col-md-9 mt-2">
             <div class="row m-auto">
                 <div class="col-sm-4 offset-sm-4">
-                    <form action="/friends/" method="get">
-                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..">
+                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..">
                 </div>
                 <h3>$interlocutor.getUsername()</h3>
                 #foreach($message in $messages)
@@ -21,7 +20,7 @@
                     #set($msgUser = $interlocutor)
                 #end
 
-                <div class="card flex-row flex-wrap">
+                <div id="chatbox" class="card flex-row flex-wrap">
                     <div class="card-header" style="background-color: inherit;">
 
                         #if ($msgUser.getAvatarUrl())
@@ -46,7 +45,6 @@
                     </div>
                 </div>
                 #end
-
             </div>
             <form class="d-flex mt-3" action="/conversations/$conversationId/add_message" method="post">
                 <div class="flex-grow-1">

@@ -40,6 +40,9 @@ public class App {
 
         //servers
         Spark.get("/servers/", (req, res) -> serverController.serverList(req, res));
+        Spark.get("/servers/create", (req, res) -> serverController.createServer(req, res));
+        Spark.post("/servers/create", (req, res) -> serverController.createServer(req, res));
+
 
         // Conversations
         Spark.get("/conversations/start_with_user", (req, res) -> conversationController.getOrCreateConversationWithUser(req, res));
