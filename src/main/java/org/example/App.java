@@ -46,7 +46,7 @@ public class App {
         // Log in and out
         Spark.get(Conf.ROUTE_LOGIN, (req, res) -> authController.login(req, res));
         Spark.post(Conf.ROUTE_LOGIN, (req, res) -> authController.login(req, res));
-        Spark.get("logout", (req, res) -> authController.logout(req, res));
+        Spark.get("/logout", (req, res) -> authController.logout(req, res));
 
         //Sign
         Spark.get("/signup", (req, res) -> authController.signUp(req,res));

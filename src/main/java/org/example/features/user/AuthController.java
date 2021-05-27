@@ -61,21 +61,19 @@ public class AuthController {
             Map<String, Object> model = new HashMap<>();
             return Template.render("auth_signup.html", model);
         }
-        System.out.println("salut");
 
         Map<String, String> query = URLUtils.decodeQuery(request.body());
         String email = query.get("email");
+        String username = query.get("username");
         String password = query.get("password");
-        System.out.println("les");
 
         Connection connection = Database.get().getConnection();
-        System.out.println("zozo");
 
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("INSERT INTO discoding.users (email, password)" +
-                    "VALUES('" + email + "', '" + password + "');");
-            System.out.println(rs);
+            int r = st.executeUpdate("INSERT INTO discoding.users (email, username, password)" +
+                    "VALUES('" + email + "', '" + username + "','" + password + "');");
+            System.out.println(r);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,6 +92,7 @@ public class AuthController {
         }
         session.invalidate();
         response.removeCookie("user_id");
+        response.redirect("/");
         return null;
     }
 }
