@@ -1,11 +1,14 @@
 package org.example.models;
 
+import org.example.features.user.UserDao;
+
 public class Message {
     private int id;
     private int conversationId;
     private int userId;
     private String content;
     private String createdAt;
+    private UserDao userDao;
 
     public Message(int id, int conversationId, int userId, String content, String createdAt) {
         this.id = id;
@@ -13,6 +16,7 @@ public class Message {
         this.userId = userId;
         this.content = content;
         this.createdAt = createdAt;
+        this.userDao = new UserDao();
     }
 
     @Override
@@ -65,4 +69,9 @@ public class Message {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
+    public User getUser() {
+        return this.userDao.getUserById(this.userId);
+    }
+
 }

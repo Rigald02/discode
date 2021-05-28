@@ -1,0 +1,49 @@
+#parse("base.html")
+#@mainLayout()
+<div class="container-fluid d-flex h-100 characterBackground">
+    <div class="row align-self-center w-100">
+        <div class="col-4 mx-auto auth-container">
+            <h3>Welcome
+            </h3>
+            <p class="text-muted">We're so excited to see you again!</p>
+            <form method="post">
+
+                <div class="mb-3">
+                    <label>Nom</label>
+                    <input type="text" name="nom" required>
+                </div>
+
+                <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="email" required>
+                </div>
+
+                <div class="mb-3">
+                <label>Message</label>
+                <textarea name="message" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <input type="submit">
+                </div>
+            </form>
+            <?php
+            if(isset($_POST['message'])){
+                $entete  = 'MIME-Version: 1.0' . "\r\n";
+                $entete .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+                $entete .= 'From: ' . $_POST['email'] . "\r\n";
+                $message = '&lt;h1&gt;message sent from the contact page of discode&lt;/h1&gt;
+            &lt;p&gt;&lt;b&gt;Nom : &lt;/b&gt;' . $_POST['nom'] . '&lt;br&gt;
+            &lt;b&gt;Email : &lt;/b&gt;' . $_POST['email'] . '&lt;br&gt;
+            &lt;b&gt;Message : &lt;/b&gt;' . $_POST['message'] . '&lt;/p&gt;';
+
+            $retour = mail('contact@discoding.com', 'Sent from Contact page', $message, $entete);
+            if($retour) {
+                echo '&lt;p&gt;Votre message a bien été envoyé.&lt;/p&gt;';
+                }
+            }
+            ?>
+        </div>
+    </div>
+</div>
+
+#end

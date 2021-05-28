@@ -95,4 +95,12 @@ public class AuthController {
         response.redirect("/");
         return null;
     }
+
+    public String contactUs(Request request, Response response) {
+        if (request.requestMethod().equals("GET")) {
+            Map<String, Object> model = new HashMap<>();
+            return Template.render("contact_us.html", model);
+        }
+        return null;
+    }
 }

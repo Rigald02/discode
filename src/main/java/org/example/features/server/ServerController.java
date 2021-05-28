@@ -53,28 +53,46 @@ public class ServerController {
         Map<String, String> query = URLUtils.decodeQuery(request.body());
         String servername = query.get("servername");
 
+        int serverId = serverDao.createServer(servername, userId);
+        channelDao.createChannel("Général", serverId);
+        channelDao.createChannel("Random", serverId);
+        channelDao.createChannel("Music", serverId);
+        channelDao.createChannel("Games", serverId);
+        channelDao.createChannel("Help", serverId);
 
-        Connection connection = Database.get().getConnection();
-        int newId = 0;
-        try {
-            PreparedStatement st = connection.prepareStatement("INSERT INTO discoding.server (serverName) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
 
-            st.setString(1, servername);
+        model.put("message", "Serveur " + servername + " créé !");
+        return Template.render("server_create.html", model);
+    }
 
-            st.executeUpdate();
-            ResultSet rs = st.getGeneratedKeys();
-            if (rs.next()) {
-                newId = rs.getInt(1);
-            }
-            st = connection.prepareStatement("INSERT INTO discoding.serverperuser (server_id, user_id) VALUES (?, ?)");
-            st.setInt(1, newId);
-            st.setInt(2, userId);
-            st.executeUpdate();
-            model.put("message", "Serveur " + servername + " créé !");
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public Object addUser(Request req, Response res) {
+        int userId = SessionUtils.getSessionUserId(req);
+        int serverId = Integer.parseInt(req.params(":id"));
+
+        Map<String, Object> model = new HashMap<>();
+        //model.put("conversations", conversationDao.getAllConversationsForUser(userId));
+
+        if (req.requestMethod().equals("GET")) {
+            model.put("message", "");
+            return Template.render("invite_user.html", model);
         }
 
-        return Template.render("server_create.html", model);
+        Map<String, String> query = URLUtils.decodeQuery(req.body());
+        String username = query.get("username");
+
+        User newUser = userDao.findUserWithUsername(username);
+        logger.info("User = " + newUser);
+        if (newUser != null){
+            if (serverDao.isAlreadyHere(serverId, newUser.getId())) {
+                model.put("message", newUser.getUsername() + " est déja présent !");
+            } else {
+                serverDao.addUser(serverId, newUser.getId());
+                model.put("message", newUser.getUsername() + " a été ajouté dans la conversation !");
+            }
+        }else {
+            model.put("message", "Désolé, " + userDao.findUserWithUsername(username) + " n'existe pas.");
+        }
+
+        return Template.render("invite_user.html", model);
     }
 }

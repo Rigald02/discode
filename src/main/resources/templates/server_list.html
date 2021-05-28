@@ -31,22 +31,19 @@
                         <img src="$avatarUrl" class="rounded-circle avatar-small mx-2"/>
                         $server.getServername()
                     </div>
-                    <!--
-                    $channels = $server.getChannels()
-                    #foreach($channel in $channels)
+                    #foreach($channel in $server.getChannels())
                 <li class="d-flex justify-content-between list-group-item">
                     <div>
                         $channel.getChannelname()
                     </div>
                     <div class="align-self-center">
-                        <a href="/server/channel?channel_id=$channel.getId()">Message</a>
+                        <a href="/channel/$channel.getId()">Message</a>
                     </div>
                 </li>
                 #end
-                    <div class="align-self-center">
+                <!--    <div class="align-self-center">
                         <a href="/conversations/start_with_user?interlocutor_id=$friend.getId()">Message</a>
-                    </div>
-                    -->
+                    </div>-->
                 </li>
                 #end
             </ul>

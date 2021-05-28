@@ -4,21 +4,17 @@
 <div class="container-fluid">
     <div class="row">
 
-        #parse( "partial_conversation_list.html" )
+        #parse( "partial_channel_list.html" )
 
-        <div class="col-sm-6 col-md-9 mt-2" id="conversation">
+        <div class="col-sm-6 col-md-9 mt-2" id="channel">
             <div class="row m-auto">
                 <div class="col-sm-4 offset-sm-4">
                     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..">
                 </div>
-                <h3>$interlocutor.getUsername()</h3>
+                <h3>$channel.getChannelname()</h3>
                 #foreach($message in $messages)
 
-                #if ($message.getUserId() == $user.getId())
-                #set($msgUser = $user)
-                #else
-                #set($msgUser = $interlocutor)
-                #end
+                #set($msgUser = $message.getUser())
 
                 <div id="chatbox" class="card flex-row flex-wrap">
                     <div class="card-header" style="background-color: inherit;">
@@ -46,7 +42,7 @@
                 </div>
                 #end
             </div>
-            <form class="d-flex mt-3" action="/conversations/$conversationId/add_message" method="post">
+            <form class="d-flex mt-3" action="/channel/$channelId/add_message" method="post">
                 <div class="flex-grow-1">
                     <input type="text" class="form-control" id="content" name="content"/>
                 </div>
@@ -59,6 +55,6 @@
 </div>
 </div>
 
-<script src="/js/page_conversation_detail.js"></script>
+<script src="/js/page_channel_detail.js"></script>
 
 #end

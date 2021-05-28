@@ -38,10 +38,20 @@ public class App {
 
         logger.info("Welcome to Discoding Backend!");
 
+        //contact us
+        Spark.get("/contact", (req, res) -> authController.contactUs(req, res));
+
+        //channel
+        Spark.post("/channel/:id/add_message", (req, res) -> channelController.addMessage(req, res));
+        Spark.get("/channel/:id", (req, res) -> channelController.detail(req, res));
+
+
         //servers
         Spark.get("/servers/", (req, res) -> serverController.serverList(req, res));
         Spark.get("/servers/create", (req, res) -> serverController.createServer(req, res));
         Spark.post("/servers/create", (req, res) -> serverController.createServer(req, res));
+        Spark.get("/servers/:id/adduser", (req, res) -> serverController.addUser(req, res));
+        Spark.post("/servers/:id/adduser", (req, res) -> serverController.addUser(req, res));
 
 
         // Conversations

@@ -1,14 +1,20 @@
 package org.example.models;
 
+import org.example.features.channel.ChannelDao;
+
+import java.util.List;
+
 public class Server {
     private int id;
     private String servername;
     private String avatarUrl;
+    private ChannelDao channelDao;
 
     public Server(int id, String servername, String avatarUrl) {
         this.id = id;
         this.servername = servername;
         this.avatarUrl = avatarUrl;
+        this.channelDao = new ChannelDao();
     }
 
     @Override
@@ -42,5 +48,9 @@ public class Server {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public List<Channel> getChannels(){
+        return this.channelDao.getChannelsForServerId(this.id);
     }
 }

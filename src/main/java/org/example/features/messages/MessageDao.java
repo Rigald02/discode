@@ -27,6 +27,24 @@ public class MessageDao {
         return messages;
     }
 
+    public List<Message> getMessagesForChannelId(int channelId) {
+        List<Message> messages = new ArrayList<>();
+        Connection connection = Database.get().getConnection();
+        try {
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM messagechannel WHERE channel_id = ? ORDER BY created_at ASC");
+            st.setInt(1, channelId);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Message message = MessageDao.mapMessage(rs);
+                messages.add(message);
+            }
+        } catch (SQLException/* | ParseException*/ e) {
+            e.printStackTrace();
+        }
+        return messages;
+    }
+
     public static Message mapMessage(ResultSet rs) throws SQLException {
         int i = 1;
         return new Message(
@@ -43,6 +61,29 @@ public class MessageDao {
         int newId = 0;
         try {
             PreparedStatement st = connection.prepareStatement("INSERT INTO messages VALUES (NULL, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+            st.setInt(1, message.getConversationId());
+            st.setInt(2, message.getUserId());
+            st.setString(3, message.getContent());
+            st.setString(4, message.getCreatedAt());
+
+            st.executeUpdate();
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                newId = rs.getInt(1);
+                message.setId(newId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return newId;
+    }
+
+    public int createMessageChannel(Message message) {
+        Connection connection = Database.get().getConnection();
+        int newId = 0;
+        try {
+            PreparedStatement st = connection.prepareStatement("INSERT INTO messagechannel VALUES (NULL, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             st.setInt(1, message.getConversationId());
             st.setInt(2, message.getUserId());
