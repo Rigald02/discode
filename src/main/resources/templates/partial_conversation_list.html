@@ -1,4 +1,4 @@
-<div class="col-sm-6 col-md-3 friends-list">
+<div class="col-sm-6 col-md-3 friends-list" style="position-fixed">
 
     <ul class="list-group mt-3 mb-3">
         <li class="list-group-item">
@@ -7,10 +7,9 @@
             </a>
         </li>
     </ul>
-    <ul class="list-group border-0">
+    <ul class="list-group border-0"  id="scrollpart">
         #foreach($conv in $conversations)
         <li class="list-group-item border-0 #if ($conv.getId() == $conversationId) active #end">
-
             <a href="/conversations/$conv.getId()"
                 class="list-group-item list-group-item-action border-0">
                 #if ($conv.getInterlocutorAvatarUrl())
@@ -23,6 +22,7 @@
             </a>
         </li>
         #end
+    </ul>
         <ul class="list-group mt-3 mb-3">
             <li class="list-group-item">
                 <a href="/servers/">
@@ -30,14 +30,32 @@
                 </a>
             </li>
         </ul>
-        <footer>
+        <ul class="list-group border-0" id="scrollpart">
+            #foreach($server in $servers)
+            <li class="list-group-item border-0 #if ($server.getId() == $serverId) active #end">
+                <a href="/servers/$server.getId()"
+                   class="list-group-item list-group-item-action border-0">
+                    #if ($server.getInterlocutorAvatarUrl())
+                    #set($avatarUrl = $server.getInterlocutorAvatarUrl())
+                    #else
+                    #set($avatarUrl = "/lib/bootstrap-icons-1.5.0/peace-fill.svg")
+                    #end
+                    <img src="$avatarUrl" class="rounded-circle avatar-small mx-2"/>
+                    $server.getServername()
+                </a>
+                <a href="/servers/create" class="btn btn-sm btn-outline-success"><i class="bi bi-people mx-2"> invite</i>
+                </a>
+            </li>
+            #end
+        </ul>
+        <footer class="footer">
             <br>
             <br>
             <div>
                 <a href="/logout" class="btn btn-lg btn-outline-danger btn-space"><i class="bi bi-power"> Log out</i>
                 </a>
                 <a href="/servers/create" class="btn btn-lg btn-outline-success"><i class="bi bi-plus-circle mx-2"> Create Server</i>
-                    </a>
+                </a>
             </div>
         </footer>
     </ul>

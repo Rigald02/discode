@@ -88,7 +88,7 @@ public class AuthController {
         Session session = request.session(false);
         if (session == null) {
             Spark.halt(401, "No valid session found");
-            return "KO";
+            return ("KO");
         }
         session.invalidate();
         response.removeCookie("user_id");

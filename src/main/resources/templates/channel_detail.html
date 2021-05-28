@@ -15,9 +15,9 @@
                 #foreach($message in $messages)
 
                 #if ($message.getUserId() == $user.getId())
-                    #set($msgUser = $user)
+                #set($msgUser = $user)
                 #else
-                    #set($msgUser = $interlocutor)
+                #set($msgUser = $interlocutor)
                 #end
 
                 <div id="chatbox" class="card flex-row flex-wrap">
