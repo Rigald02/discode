@@ -51,7 +51,7 @@ public class AuthController {
         // Create session
         SessionUtils.createSession(user, request, response);
 
-        // Redirect to medias page
+        // Redirect to friends page
         response.redirect(Conf.ROUTE_AUTHENTICATED_ROOT);
         return null;
     }
@@ -68,7 +68,7 @@ public class AuthController {
         String password = query.get("password");
 
         Connection connection = Database.get().getConnection();
-
+        //Do the connection, then sent sql command to the database directly to input the new user.
         try {
             Statement st = connection.createStatement();
             int r = st.executeUpdate("INSERT INTO discoding.users (email, username, password)" +
@@ -77,8 +77,7 @@ public class AuthController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // mapping for email, passowrd and confirm
-        //faire la connection par connection et preparedstatement pour l'ordre sql
+
         //redirect to the login page afterward
         response.redirect(Conf.ROUTE_LOGIN);
         return null;

@@ -1,24 +1,17 @@
 const db = mysql.createConnection({
-
    host: "localhost",
-
    user: "root",
-
    password: "root"
-
  });
 
   db.connect(function(err) {
     if (err) throw err;
     console.log("Connect to database");
   });
-
   const dataUser = new DataUser("users", "username", {
     dialect: "mysql",
     host: "localhost",
   })
-
-
   const dataMessage = new dataMessage("content", {
     dialect: "mysql",
     host: "localhost",
@@ -27,14 +20,9 @@ const db = mysql.createConnection({
 try {
    dataUser.authenticate();
    dataMessage.authenticate();
-   console.log('Connect to database!');
-   dataUser.query("SELECT username FROM users WHERE friends.friend_user_id = 1;").then(([results, metadata]) => {
-       console.log('Friends taken !');
-     })
+   dataUser.query("SELECT username FROM users WHERE friends.friend_user_id = 1;").then(([results, metadata]);
    dataMessage.query("SELECT content FROM messages WHERE user_id = users.id OR friends.friend_user_id = users.id;").
-   then(([results, metadata]) => {
-       console.log('Friends taken !');
-     })
+   then(([results, metadata]);
  } catch (error) {
    console.error('Impossible to connect', error);
  }
@@ -65,7 +53,8 @@ try {
       const Content = place.content.replace(regex, `<span class="hl">${this.value}</span>`);
       return `
         <li>
-          <span class="name">${Name}, ${Content}</span>
+          <span class="name">${Name}</span>
+          <span class="content">, ${Content}</span>
         </li>
       `;
     }).join('');
@@ -77,26 +66,3 @@ try {
 
   searchInput.addEventListener('change', displayMatches);
   searchInput.addEventListener('keyup', displayMatches);
-
- /*
-function search() {
-var input, filter, found, table, tr, td, i, j;
-input = document.getElementById("myInput");
-filter = input.value.toUpperCase();
-table = document.getElementById("myTable");
-table.style.display = "block";
-tr = table.getElementsByTagName("tr");
-for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td");
-    for (j = 0; j < td.length; j++) {
-        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            found = true;
-        }
-    }
-    if (found) {
-        tr[i].style.display = "";
-        found = false;
-    } else if (!tr[i].id.match('^tableHeader')) {
-        tr[i].style.display = "none";
-    }
-}*/

@@ -12,8 +12,9 @@ html, body {
 }
 
 .auth-container {
-    display-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     justify-content: space-between;
     background-color: #36393f;
@@ -46,6 +47,10 @@ html, body {
 
 #scrollpart{
     overflow-y: scroll; /* Only the list has to be scrolled */
+}
+
+.contact{
+    margin-left: 5%;
 }
 
 .footer {
